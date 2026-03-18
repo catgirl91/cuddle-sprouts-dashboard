@@ -1,4 +1,5 @@
-export const stats = [
+// Hardcoded sample data (fallback when live data is unavailable)
+const sampleStats = [
   { label: 'Active Subscribers', value: '2,847', change: '+12.3%', up: true },
   { label: 'Open Rate (30d)', value: '42.6%', change: '+3.1%', up: true },
   { label: 'Click Rate (30d)', value: '8.9%', change: '-0.4%', up: false },
@@ -6,7 +7,7 @@ export const stats = [
   { label: 'List Growth Rate', value: '5.2%', change: '+1.1%', up: true },
 ]
 
-export const priorities = [
+const samplePriorities = [
   {
     id: 1,
     title: 'Fix Welcome Series Drop-off',
@@ -49,7 +50,7 @@ export const priorities = [
   },
 ]
 
-export const emailFlows = [
+const sampleEmailFlows = [
   {
     id: 'welcome',
     name: 'Welcome Series',
@@ -118,7 +119,7 @@ export const emailFlows = [
   },
 ]
 
-export const insightsData = {
+const sampleInsightsData = {
   revenueByFlow: [
     { name: 'Welcome', value: 42.30 },
     { name: 'Cart', value: 38.90 },
@@ -144,7 +145,7 @@ export const insightsData = {
   ],
 }
 
-export const pipeline = [
+const samplePipeline = [
   { id: 1, task: 'A/B Test: Welcome Email 3 Subject', status: 'in-progress', assignee: 'You', dueDate: 'Mar 20' },
   { id: 2, task: 'Spring Swaddle Campaign Design', status: 'review', assignee: 'Designer', dueDate: 'Mar 19' },
   { id: 3, task: 'Win-Back Flow Restructure', status: 'todo', assignee: 'You', dueDate: 'Mar 22' },
@@ -154,14 +155,14 @@ export const pipeline = [
   { id: 7, task: 'Browse Abandon Trigger Fix', status: 'blocked', assignee: 'Dev', dueDate: 'Mar 25' },
 ]
 
-export const skipToday = [
+const sampleSkipToday = [
   { id: 1, task: 'Redesign footer template', reason: 'Waiting on brand guidelines v2' },
   { id: 2, task: 'Migrate to new ESP', reason: 'Q2 initiative, not urgent' },
   { id: 3, task: 'Annual subscriber survey', reason: 'Survey tool renewal pending' },
   { id: 4, task: 'Holiday campaign planning', reason: 'Too early — revisit in September' },
 ]
 
-export const comingUp = [
+const sampleComingUp = [
   { id: 1, task: 'Mother\'s Day Campaign Kickoff', date: 'Mar 25', urgency: 'high' },
   { id: 2, task: 'Quarterly Deliverability Audit', date: 'Mar 28', urgency: 'medium' },
   { id: 3, task: 'New Product Launch: Bamboo Onesies', date: 'Apr 1', urgency: 'high' },
@@ -169,3 +170,77 @@ export const comingUp = [
   { id: 5, task: 'Summer Collection Teaser Planning', date: 'Apr 10', urgency: 'medium' },
   { id: 6, task: 'Annual Retention Report', date: 'Apr 15', urgency: 'low' },
 ]
+
+const sampleData = {
+  stats: sampleStats,
+  priorities: samplePriorities,
+  emailFlows: sampleEmailFlows,
+  insightsData: sampleInsightsData,
+  pipeline: samplePipeline,
+  skipToday: sampleSkipToday,
+  comingUp: sampleComingUp,
+}
+
+// Data is considered stale if older than 48 hours
+const STALE_THRESHOLD_MS = 48 * 60 * 60 * 1000
+
+function isDataFresh(lastUpdated) {
+  try {
+    const updatedAt = new Date(lastUpdated).getTime()
+    return Date.now() - updatedAt < STALE_THRESHOLD_MS
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Fetches live dashboard data from /data/dashboard-data.json.
+ * Falls back to hardcoded sample data if fetch fails or data is stale.
+ *
+ * Returns: { data, isLive, lastUpdated }
+ */
+export async function fetchDashboardData() {
+  try {
+    const response = await fetch('/data/dashboard-data.json')
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+
+    const liveData = await response.json()
+
+    if (!liveData.lastUpdated || !isDataFresh(liveData.lastUpdated)) {
+      return {
+        data: sampleData,
+        isLive: false,
+        lastUpdated: null,
+      }
+    }
+
+    return {
+      data: {
+        stats: liveData.stats,
+        priorities: liveData.priorities,
+        emailFlows: liveData.emailFlows,
+        insightsData: liveData.insightsData,
+        pipeline: liveData.pipeline,
+        skipToday: liveData.skipToday,
+        comingUp: liveData.comingUp,
+      },
+      isLive: true,
+      lastUpdated: liveData.lastUpdated,
+    }
+  } catch {
+    return {
+      data: sampleData,
+      isLive: false,
+      lastUpdated: null,
+    }
+  }
+}
+
+// Re-export sample data for backward compatibility
+export const stats = sampleStats
+export const priorities = samplePriorities
+export const emailFlows = sampleEmailFlows
+export const insightsData = sampleInsightsData
+export const pipeline = samplePipeline
+export const skipToday = sampleSkipToday
+export const comingUp = sampleComingUp
