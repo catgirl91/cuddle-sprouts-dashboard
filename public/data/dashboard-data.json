@@ -1,168 +1,41 @@
 {
-  "lastUpdated": "2026-03-18T08:00:00Z",
-  "stats": [
-    { "label": "Active Subscribers", "value": "2,847", "change": "+12.3%", "up": true },
-    { "label": "Open Rate (30d)", "value": "42.6%", "change": "+3.1%", "up": true },
-    { "label": "Click Rate (30d)", "value": "8.9%", "change": "-0.4%", "up": false },
-    { "label": "Revenue (30d)", "value": "$119.85", "change": "+18.7%", "up": true },
-    { "label": "List Growth Rate", "value": "5.2%", "change": "+1.1%", "up": true }
+  "lastUpdated": "2026-03-19T00:00:00.000Z",
+  "dataSource": "live",
+  "stats": {"subscribers":366,"openRate":null,"clickRate":null,"revenue":119.85,"listGrowthRate":null,"totalRevenue30d":1225.40,"attributedRevenuePercent":9.78,"shopifyRevenue30d":1199.86,"shopifyOrders30d":17,"shopifyRevenue7d":85.08,"shopifyOrders7d":2},
+  "flows": [
+    {"id":"welcome-flow","name":"Welcome Flow","status":"Live","trigger":"Added to Newsletter list","type":"Email + SMS A/B","deliveries":57,"revenue":61.20,"revenuePerRecipient":1.07,"health":"good"},
+    {"id":"post-purchase","name":"Post-Purchase Bounce Back","status":"Live","trigger":"Placed Order","type":"Email","deliveries":33,"revenue":58.65,"revenuePerRecipient":1.78,"health":"good"},
+    {"id":"browse-abandonment","name":"Browse Abandonment","status":"Live","trigger":"Viewed Product","type":"Email + SMS A/B","deliveries":30,"revenue":0,"revenuePerRecipient":0,"health":"needs-attention"},
+    {"id":"winback","name":"Winback - High-Value 180 Days","status":"Live","trigger":"Added to Win-Back list","type":"Email","deliveries":22,"revenue":0,"revenuePerRecipient":0,"health":"needs-attention"},
+    {"id":"abandoned-cart","name":"Abandoned Cart Reminder","status":"Live","trigger":"Checkout Started","type":"Email + SMS","deliveries":14,"revenue":0,"revenuePerRecipient":0,"health":"needs-attention"},
+    {"id":"sunset","name":"Sunset Unengaged Subscribers","status":"Live","trigger":"Added to Unengage segment","type":"Email","deliveries":8,"revenue":0,"revenuePerRecipient":0,"health":"ok"}
   ],
   "priorities": [
-    {
-      "id": 1,
-      "title": "Fix Welcome Series Drop-off",
-      "description": "Email 3 in the welcome series has a 68% drop-off rate. Subject line needs A/B testing.",
-      "prompt": "Draft 3 A/B test subject lines for a baby product welcome series email #3, focused on organic cotton benefits. Current subject: \"Your Baby Deserves the Best\"",
-      "done": false,
-      "urgency": "high"
-    },
-    {
-      "id": 2,
-      "title": "Launch Spring Collection Campaign",
-      "description": "New muslin swaddle collection ready. Segment: engaged buyers in last 90 days.",
-      "prompt": "Write a warm, nurturing email announcing a new spring muslin swaddle collection for a baby brand called Cuddle Sprouts. Include 3 product highlights and a 15% early-access discount code SPRING15.",
-      "done": true,
-      "urgency": "medium"
-    },
-    {
-      "id": 3,
-      "title": "Win-Back Flow Optimization",
-      "description": "Current win-back flow has 2.1% conversion. Industry avg is 5.4%. Needs new incentive structure.",
-      "prompt": "Design a 4-email win-back flow for lapsed baby product customers (90+ days inactive). Include progressive discount strategy starting at free shipping, ending at 20% off.",
-      "done": false,
-      "urgency": "high"
-    },
-    {
-      "id": 4,
-      "title": "Segment VIP Customers",
-      "description": "Create a VIP segment for customers with 3+ orders and AOV > $45.",
-      "prompt": "Create a Klaviyo segment definition for VIP baby product customers: 3+ orders, AOV over $45, at least one order in last 60 days. Include recommended properties to track.",
-      "done": false,
-      "urgency": "medium"
-    },
-    {
-      "id": 5,
-      "title": "Update Sunset Policy",
-      "description": "Remove unengaged subscribers (no opens in 180 days) to improve deliverability.",
-      "prompt": "Write a 2-email sunset series for a baby brand. Email 1: \"We miss you\" with emotional appeal. Email 2: \"Last chance\" with clear unsubscribe CTA. Keep brand voice warm and gentle.",
-      "done": true,
-      "urgency": "low"
-    }
+    {"id":1,"title":"Reactivate Google Ads — All 5 Campaigns Are Paused","owner":"Yenny","timeEstimate":"20-30 min","why":"All Google Ads campaigns are currently paused — zero paid traffic entering the funnel.","what":"Log into Google Ads, review why campaigns were paused, re-enable the right ones.","copyPrompt":"Review Google Ads — all 5 campaigns are paused. Re-enable the most relevant ones and check for billing or policy issues."},
+    {"id":2,"title":"Send the Easter Promo Email Campaign","owner":"Together","timeEstimate":"30-45 min","why":"No campaigns sent in 30 days. Easter segment already built (366 eligible), Easter is April 5.","what":"Draft Easter promo campaign in Klaviyo targeting PROMO Eligible segment. Yenny reviews and sends.","copyPrompt":"Write an Easter promotional email for Cuddle Sprouts targeting engaged subscribers. Focus on spring/Easter gifting for babies. Include a promo offer and product highlights. Warm, celebratory, sustainable-brand tone."},
+    {"id":3,"title":"Fulfill Today's New Order #1455","owner":"Yenny","timeEstimate":"5-10 min","why":"Order #1455 (Margarita Moreno, $42.54) came in this morning and is still unfulfilled.","what":"Go to Shopify admin > Orders, find #1455, fulfill and ship.","copyPrompt":null}
   ],
-  "emailFlows": [
-    {
-      "id": "welcome",
-      "name": "Welcome Series",
-      "status": "live",
-      "emails": 5,
-      "openRate": 58.2,
-      "clickRate": 12.4,
-      "revenue": 42.30,
-      "lastUpdated": "2026-03-15",
-      "diagnosis": "Strong opener (72% open) but Email 3 drops to 31%. Subject line fatigue detected. Recommend: split test personalized vs. benefit-led subjects. Email 5 CTA button color may blend with template—test contrasting color."
-    },
-    {
-      "id": "abandoned-cart",
-      "name": "Abandoned Cart",
-      "status": "live",
-      "emails": 3,
-      "openRate": 45.8,
-      "clickRate": 9.7,
-      "revenue": 38.90,
-      "lastUpdated": "2026-03-12",
-      "diagnosis": "Performing above benchmark. Email 1 timing (1hr) is optimal. Email 2 could include social proof—add review snippet. Email 3 discount (10%) converts at 4.2%, test bumping to 15% for high-AOV carts only."
-    },
-    {
-      "id": "post-purchase",
-      "name": "Post-Purchase",
-      "status": "live",
-      "emails": 4,
-      "openRate": 52.1,
-      "clickRate": 7.3,
-      "revenue": 18.65,
-      "lastUpdated": "2026-03-10",
-      "diagnosis": "Good engagement but cross-sell email (Email 3) underperforms. Product recommendations not personalized—switch from static to dynamic product feed. Add age-appropriate filtering based on baby registry data."
-    },
-    {
-      "id": "win-back",
-      "name": "Win-Back",
-      "status": "draft",
-      "emails": 3,
-      "openRate": 22.4,
-      "clickRate": 3.1,
-      "revenue": 8.40,
-      "lastUpdated": "2026-03-08",
-      "diagnosis": "Below industry average (5.4% click). Trigger timing (90 days) may be too late—test 60-day trigger. Current incentive (free shipping) not compelling enough. Recommend progressive: free shipping → 10% off → 20% off with urgency."
-    },
-    {
-      "id": "birthday",
-      "name": "Baby Birthday",
-      "status": "live",
-      "emails": 2,
-      "openRate": 61.5,
-      "clickRate": 14.2,
-      "revenue": 11.60,
-      "lastUpdated": "2026-03-05",
-      "diagnosis": "Highest click rate across all flows. Strong emotional connection. Consider adding a 3rd email (milestone gift guide) 1 week after birthday. Current 20% discount converts well—maintain. Add SMS companion for higher reach."
-    },
-    {
-      "id": "browse-abandon",
-      "name": "Browse Abandonment",
-      "status": "paused",
-      "emails": 2,
-      "openRate": 33.7,
-      "clickRate": 5.8,
-      "revenue": 0,
-      "lastUpdated": "2026-02-28",
-      "diagnosis": "Paused due to low engagement. Content too generic—needs dynamic product insertion. Trigger fires too broadly (any page view). Narrow to: viewed product page 2+ times OR spent 30+ seconds. Re-test after fixes."
-    }
-  ],
-  "insightsData": {
-    "revenueByFlow": [
-      { "name": "Welcome", "value": 42.30 },
-      { "name": "Cart", "value": 38.90 },
-      { "name": "Post-Purch", "value": 18.65 },
-      { "name": "Birthday", "value": 11.60 },
-      { "name": "Win-Back", "value": 8.40 },
-      { "name": "Browse", "value": 0 }
-    ],
-    "engagementTrend": [
-      { "week": "W1", "openRate": 39.2, "clickRate": 7.1 },
-      { "week": "W2", "openRate": 41.5, "clickRate": 8.3 },
-      { "week": "W3", "openRate": 40.8, "clickRate": 7.9 },
-      { "week": "W4", "openRate": 42.6, "clickRate": 8.9 },
-      { "week": "W5", "openRate": 43.1, "clickRate": 9.2 },
-      { "week": "W6", "openRate": 44.0, "clickRate": 9.5 }
-    ],
-    "subscriberSegments": [
-      { "name": "Active Buyers", "value": 892 },
-      { "name": "Engaged Non-Buyers", "value": 634 },
-      { "name": "New Subscribers", "value": 458 },
-      { "name": "At Risk", "value": 312 },
-      { "name": "Lapsed", "value": 551 }
-    ]
-  },
+  "campaigns": {"recentCampaigns":[],"lastCampaignSentDaysAgo":30,"nextPlanned":"Easter Promo (target: this week, before Apr 5)","note":"No campaigns sent in last 30 days"},
   "pipeline": [
-    { "id": 1, "task": "A/B Test: Welcome Email 3 Subject", "status": "in-progress", "assignee": "You", "dueDate": "Mar 20" },
-    { "id": 2, "task": "Spring Swaddle Campaign Design", "status": "review", "assignee": "Designer", "dueDate": "Mar 19" },
-    { "id": 3, "task": "Win-Back Flow Restructure", "status": "todo", "assignee": "You", "dueDate": "Mar 22" },
-    { "id": 4, "task": "VIP Segment Setup in Klaviyo", "status": "todo", "assignee": "You", "dueDate": "Mar 21" },
-    { "id": 5, "task": "Post-Purchase Dynamic Feed", "status": "in-progress", "assignee": "Dev", "dueDate": "Mar 23" },
-    { "id": 6, "task": "SMS Birthday Flow Companion", "status": "backlog", "assignee": "You", "dueDate": "Mar 28" },
-    { "id": 7, "task": "Browse Abandon Trigger Fix", "status": "blocked", "assignee": "Dev", "dueDate": "Mar 25" }
+    {"item":"Easter Promo Email Campaign","status":"Ready to send","segment":"PROMO Eligible — 366 subscribers","deadline":"This week (Easter Apr 5)"},
+    {"item":"Best Sellers (Google Ads)","status":"Paused — scheduled April 15","channel":"Google Ads"},
+    {"item":"Back in Stock Alert flow","status":"Draft — not published","channel":"Klaviyo"},
+    {"item":"Fulfilled Order flow","status":"Draft — not published","channel":"Klaviyo"}
   ],
-  "skipToday": [
-    { "id": 1, "task": "Redesign footer template", "reason": "Waiting on brand guidelines v2" },
-    { "id": 2, "task": "Migrate to new ESP", "reason": "Q2 initiative, not urgent" },
-    { "id": 3, "task": "Annual subscriber survey", "reason": "Survey tool renewal pending" },
-    { "id": 4, "task": "Holiday campaign planning", "reason": "Too early — revisit in September" }
-  ],
+  "skipToday": ["Welcome Flow — healthy ($61.20, $1.07/recipient)","Post-Purchase flow — healthy ($58.65, $1.78/recipient)","Facebook Ads — 1 campaign, low priority","Blog/SEO — no urgent updates","Social Media — not active yet"],
   "comingUp": [
-    { "id": 1, "task": "Mother's Day Campaign Kickoff", "date": "Mar 25", "urgency": "high" },
-    { "id": 2, "task": "Quarterly Deliverability Audit", "date": "Mar 28", "urgency": "medium" },
-    { "id": 3, "task": "New Product Launch: Bamboo Onesies", "date": "Apr 1", "urgency": "high" },
-    { "id": 4, "task": "Subscriber Milestone Celebration (3K)", "date": "Apr 5", "urgency": "low" },
-    { "id": 5, "task": "Summer Collection Teaser Planning", "date": "Apr 10", "urgency": "medium" },
-    { "id": 6, "task": "Annual Retention Report", "date": "Apr 15", "urgency": "low" }
-  ]
+    {"item":"Easter","date":"April 5, 2026","action":"Send promo campaign this week"},
+    {"item":"Best Sellers Google Ads","date":"April 15, 2026","action":"Confirm campaign is ready before re-enabling"},
+    {"item":"Abandoned Cart & Browse Abandonment audit","date":"This week","action":"Both have deliveries but $0 revenue — investigate"}
+  ],
+  "alerts": [
+    {"level":"critical","channel":"Google Ads","message":"ALL 5 campaigns paused — zero paid acquisition active"},
+    {"level":"warning","channel":"Klaviyo","message":"No email campaigns sent in 30 days"},
+    {"level":"warning","channel":"Klaviyo","message":"Abandoned Cart: 14 deliveries, $0 revenue"},
+    {"level":"info","channel":"Shopify","message":"Order #1455 (today, $42.54) is unfulfilled"}
+  ],
+  "charts": {
+    "weeklyRevenue": {"label":"Shopify Revenue by Week","data":[{"week":"Feb 17-23","revenue":190.54},{"week":"Feb 24-Mar 2","revenue":353.19},{"week":"Mar 3-9","revenue":421.36},{"week":"Mar 10-19","revenue":410.54}]},
+    "flowHealth": {"label":"Flow Revenue (30 days)","data":[{"flow":"Welcome Flow","revenue":61.20,"status":"healthy"},{"flow":"Post-Purchase","revenue":58.65,"status":"healthy"},{"flow":"Browse Abandonment","revenue":0,"status":"needs-review"},{"flow":"Winback","revenue":0,"status":"needs-review"},{"flow":"Abandoned Cart","revenue":0,"status":"needs-review"}]}
+  }
 }
