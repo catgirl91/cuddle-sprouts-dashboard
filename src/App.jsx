@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react'
 import {
   Target, Mail, BarChart3, GitBranch, SkipForward, CalendarClock, Loader2,
+  ShoppingBag, Search, Facebook,
 } from 'lucide-react'
 import Header from './components/Header'
-import StatCards from './components/StatCards'
+import ChannelBanner from './components/ChannelBanner'
 import Priorities from './components/Priorities'
-import EmailFlows from './components/EmailFlows'
+import ShopifyTab from './components/ShopifyTab'
+import KlaviyoTab from './components/KlaviyoTab'
+import GoogleAdsTab from './components/GoogleAdsTab'
+import FacebookAdsTab from './components/FacebookAdsTab'
+import SeoTab from './components/SeoTab'
 import Insights from './components/Insights'
 import Pipeline from './components/Pipeline'
 import SkipToday from './components/SkipToday'
@@ -16,8 +21,16 @@ function TabContent({ activeTab, data }) {
   switch (activeTab) {
     case 'priorities':
       return <Priorities priorities={data.priorities} />
-    case 'flows':
-      return <EmailFlows flows={data.emailFlows} />
+    case 'shopify':
+      return <ShopifyTab data={data.shopify} />
+    case 'klaviyo':
+      return <KlaviyoTab data={data.klaviyo} />
+    case 'googleAds':
+      return <GoogleAdsTab data={data.googleAds} />
+    case 'facebookAds':
+      return <FacebookAdsTab data={data.facebookAds} />
+    case 'seo':
+      return <SeoTab data={data.seo} />
     case 'insights':
       return <Insights data={data.insightsData} />
     case 'pipeline':
@@ -63,7 +76,11 @@ export default function App() {
 
   const tabs = [
     { id: 'priorities', label: 'Priorities', icon: Target, count: dashboardData.priorities.filter(p => !p.done).length },
-    { id: 'flows', label: 'Email Flows', icon: Mail, count: dashboardData.emailFlows.length },
+    { id: 'shopify', label: 'Shopify', icon: ShoppingBag },
+    { id: 'klaviyo', label: 'Klaviyo', icon: Mail, count: (dashboardData.klaviyo?.flows ?? []).length },
+    { id: 'googleAds', label: 'Google Ads', icon: Target },
+    { id: 'facebookAds', label: 'Facebook Ads', icon: Facebook },
+    { id: 'seo', label: 'SEO/Blog', icon: Search },
     { id: 'insights', label: 'Insights', icon: BarChart3 },
     { id: 'pipeline', label: 'Pipeline', icon: GitBranch, count: dashboardData.pipeline.length },
     { id: 'skip', label: 'Skip Today', icon: SkipForward, count: dashboardData.skipToday.length },
@@ -74,7 +91,7 @@ export default function App() {
     <div className="min-h-screen bg-bg">
       <Header isLive={isLive} lastUpdated={lastUpdated} />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-        <StatCards stats={dashboardData.stats} />
+        <ChannelBanner items={dashboardData.channelBanner} onChannelClick={setActiveTab} />
 
         {/* Tabs */}
         <div className="bg-white rounded-xl border border-sage-light/40 shadow-sm overflow-hidden">
