@@ -1,11 +1,11 @@
 {
   "lastUpdated": "2026-03-19T00:00:00.000Z",
-  "stats": [
-    { "label": "Active Subscribers", "value": "366", "change": "+9.8%", "up": true },
-    { "label": "Open Rate (30d)", "value": "N/A", "change": "—", "up": true },
-    { "label": "Click Rate (30d)", "value": "N/A", "change": "—", "up": true },
-    { "label": "Revenue (30d)", "value": "$119.85", "change": "+18.7%", "up": true },
-    { "label": "List Growth Rate", "value": "N/A", "change": "—", "up": true }
+  "channelBanner": [
+    { "channel": "shopify", "label": "Shopify Revenue", "value": "$1,247.30", "change": "+18.7%", "up": true, "sparkline": [820, 910, 1050, 980, 1120, 1190, 1247] },
+    { "channel": "klaviyo", "label": "Klaviyo Email Revenue", "value": "$119.85", "change": "+12.3%", "up": true, "sparkline": [65, 78, 82, 95, 102, 110, 119] },
+    { "channel": "googleAds", "label": "Google Ads ROAS", "value": "0.00x", "change": "Paused", "up": false, "sparkline": [2.1, 1.8, 2.3, 1.9, 0, 0, 0] },
+    { "channel": "facebookAds", "label": "Facebook Ads ROAS", "value": "1.42x", "change": "-8.2%", "up": false, "sparkline": [1.6, 1.5, 1.7, 1.4, 1.3, 1.5, 1.42] },
+    { "channel": "seo", "label": "SEO Organic Traffic", "value": "482", "change": "+6.1%", "up": true, "sparkline": [310, 340, 380, 405, 420, 455, 482] }
   ],
   "priorities": [
     {
@@ -49,75 +49,139 @@
       "urgency": "medium"
     }
   ],
-  "emailFlows": [
-    {
-      "id": "welcome-flow",
-      "name": "Welcome Flow",
-      "status": "live",
-      "emails": 5,
-      "openRate": 58.2,
-      "clickRate": 12.4,
-      "revenue": 61.20,
-      "lastUpdated": "2026-03-19",
-      "diagnosis": "Healthy flow generating $61.20 revenue at $1.07/recipient. 57 deliveries with strong engagement. Email + SMS A/B test active — keep monitoring variant performance."
-    },
-    {
-      "id": "post-purchase",
-      "name": "Post-Purchase Bounce Back",
-      "status": "live",
-      "emails": 4,
-      "openRate": 52.1,
-      "clickRate": 7.3,
-      "revenue": 58.65,
-      "lastUpdated": "2026-03-19",
-      "diagnosis": "Top revenue-per-recipient flow at $1.78. 33 deliveries generating $58.65. Consider adding dynamic product recommendations to the cross-sell email to boost click rate."
-    },
-    {
-      "id": "browse-abandonment",
-      "name": "Browse Abandonment",
-      "status": "live",
-      "emails": 2,
-      "openRate": 33.7,
-      "clickRate": 5.8,
-      "revenue": 0,
-      "lastUpdated": "2026-03-19",
-      "diagnosis": "30 deliveries but $0 revenue — needs attention. Trigger may fire too broadly (any page view). Narrow to: viewed product page 2+ times OR spent 30+ seconds. Add dynamic product insertion."
-    },
-    {
-      "id": "winback",
-      "name": "Winback — High-Value 180 Days",
-      "status": "live",
-      "emails": 3,
-      "openRate": 22.4,
-      "clickRate": 3.1,
-      "revenue": 0,
-      "lastUpdated": "2026-03-19",
-      "diagnosis": "22 deliveries but $0 revenue. 180-day trigger may be too late — test 60-day trigger. Current incentive may not be compelling enough. Recommend progressive: free shipping → 10% off → 20% off with urgency."
-    },
-    {
-      "id": "abandoned-cart",
-      "name": "Abandoned Cart Reminder",
-      "status": "live",
-      "emails": 3,
-      "openRate": 45.8,
-      "clickRate": 9.7,
-      "revenue": 0,
-      "lastUpdated": "2026-03-19",
-      "diagnosis": "14 deliveries but $0 revenue despite decent open/click rates. Check if discount codes are working. Email 2 could include social proof. Test bumping discount for high-AOV carts."
-    },
-    {
-      "id": "sunset",
-      "name": "Sunset Unengaged Subscribers",
-      "status": "live",
-      "emails": 2,
-      "openRate": 30.0,
-      "clickRate": 4.0,
-      "revenue": 0,
-      "lastUpdated": "2026-03-19",
-      "diagnosis": "8 deliveries — list hygiene flow working as expected. Revenue is $0 by design (sunset goal is re-engagement or clean removal). Monitor unsubscribe rate vs re-engagement rate."
-    }
-  ],
+  "shopify": {
+    "revenue": { "today": 42.54, "week": 289.70, "month": 1247.30 },
+    "orders": { "today": 1, "week": 8, "month": 34 },
+    "aov": 36.69,
+    "topProducts": [
+      { "name": "Organic Cotton Swaddle Set", "revenue": 328.50, "unitsSold": 15, "image": "" },
+      { "name": "Bamboo Sleep Sack", "revenue": 245.80, "unitsSold": 11, "image": "" },
+      { "name": "Muslin Burp Cloths (3-pack)", "revenue": 189.60, "unitsSold": 24, "image": "" },
+      { "name": "Organic Onesie Bundle", "revenue": 167.40, "unitsSold": 9, "image": "" },
+      { "name": "Newborn Gift Box", "revenue": 142.00, "unitsSold": 4, "image": "" }
+    ]
+  },
+  "klaviyo": {
+    "subscribers": 366,
+    "listGrowthRate": 9.8,
+    "flows": [
+      {
+        "id": "welcome-flow",
+        "name": "Welcome Flow",
+        "status": "live",
+        "emails": 5,
+        "openRate": 58.2,
+        "clickRate": 12.4,
+        "revenue": 61.20,
+        "lastUpdated": "2026-03-19",
+        "diagnosis": "Healthy flow generating $61.20 revenue at $1.07/recipient. 57 deliveries with strong engagement. Email + SMS A/B test active — keep monitoring variant performance."
+      },
+      {
+        "id": "post-purchase",
+        "name": "Post-Purchase Bounce Back",
+        "status": "live",
+        "emails": 4,
+        "openRate": 52.1,
+        "clickRate": 7.3,
+        "revenue": 58.65,
+        "lastUpdated": "2026-03-19",
+        "diagnosis": "Top revenue-per-recipient flow at $1.78. 33 deliveries generating $58.65. Consider adding dynamic product recommendations to the cross-sell email to boost click rate."
+      },
+      {
+        "id": "browse-abandonment",
+        "name": "Browse Abandonment",
+        "status": "live",
+        "emails": 2,
+        "openRate": 33.7,
+        "clickRate": 5.8,
+        "revenue": 0,
+        "lastUpdated": "2026-03-19",
+        "diagnosis": "30 deliveries but $0 revenue — needs attention. Trigger may fire too broadly (any page view). Narrow to: viewed product page 2+ times OR spent 30+ seconds. Add dynamic product insertion."
+      },
+      {
+        "id": "winback",
+        "name": "Winback — High-Value 180 Days",
+        "status": "live",
+        "emails": 3,
+        "openRate": 22.4,
+        "clickRate": 3.1,
+        "revenue": 0,
+        "lastUpdated": "2026-03-19",
+        "diagnosis": "22 deliveries but $0 revenue. 180-day trigger may be too late — test 60-day trigger. Current incentive may not be compelling enough. Recommend progressive: free shipping → 10% off → 20% off with urgency."
+      },
+      {
+        "id": "abandoned-cart",
+        "name": "Abandoned Cart Reminder",
+        "status": "live",
+        "emails": 3,
+        "openRate": 45.8,
+        "clickRate": 9.7,
+        "revenue": 0,
+        "lastUpdated": "2026-03-19",
+        "diagnosis": "14 deliveries but $0 revenue despite decent open/click rates. Check if discount codes are working. Email 2 could include social proof. Test bumping discount for high-AOV carts."
+      },
+      {
+        "id": "sunset",
+        "name": "Sunset Unengaged Subscribers",
+        "status": "live",
+        "emails": 2,
+        "openRate": 30.0,
+        "clickRate": 4.0,
+        "revenue": 0,
+        "lastUpdated": "2026-03-19",
+        "diagnosis": "8 deliveries — list hygiene flow working as expected. Revenue is $0 by design (sunset goal is re-engagement or clean removal). Monitor unsubscribe rate vs re-engagement rate."
+      }
+    ],
+    "campaigns": [
+      { "id": "camp-1", "name": "Valentine's Day Collection", "sentDate": "2026-02-12", "recipients": 310, "openRate": 41.2, "clickRate": 6.8, "revenue": 89.40 },
+      { "id": "camp-2", "name": "New Arrivals — Spring", "sentDate": "2026-02-20", "recipients": 340, "openRate": 38.5, "clickRate": 5.2, "revenue": 42.10 }
+    ],
+    "emailRevenue": 119.85
+  },
+  "googleAds": {
+    "spend": 0,
+    "roas": 0,
+    "conversions": 0,
+    "costPerConversion": 0,
+    "campaigns": [
+      { "id": "gad-1", "name": "Best Sellers — Shopping", "status": "paused", "spend": 0, "conversions": 0, "roas": 0 },
+      { "id": "gad-2", "name": "Brand Search — Cuddle Sprouts", "status": "paused", "spend": 0, "conversions": 0, "roas": 0 },
+      { "id": "gad-3", "name": "Baby Gifts — Search", "status": "paused", "spend": 0, "conversions": 0, "roas": 0 },
+      { "id": "gad-4", "name": "Organic Baby — Display", "status": "paused", "spend": 0, "conversions": 0, "roas": 0 },
+      { "id": "gad-5", "name": "Retargeting — Cart Abandoners", "status": "paused", "spend": 0, "conversions": 0, "roas": 0 }
+    ]
+  },
+  "facebookAds": {
+    "spend": 85.20,
+    "roas": 1.42,
+    "conversions": 3,
+    "topAdSets": [
+      { "id": "fb-1", "name": "Lookalike — Past Purchasers", "status": "active", "spend": 52.30, "conversions": 2, "roas": 1.65 },
+      { "id": "fb-2", "name": "Interest — New Parents", "status": "active", "spend": 32.90, "conversions": 1, "roas": 1.08 }
+    ]
+  },
+  "seo": {
+    "organicTraffic": 482,
+    "keywordRankings": [
+      { "keyword": "organic baby swaddle", "position": 12, "change": 3, "volume": 1200 },
+      { "keyword": "bamboo sleep sack baby", "position": 18, "change": -2, "volume": 880 },
+      { "keyword": "cuddle sprouts", "position": 1, "change": 0, "volume": 90 },
+      { "keyword": "organic cotton baby clothes", "position": 34, "change": 5, "volume": 3400 },
+      { "keyword": "eco friendly baby gifts", "position": 22, "change": 1, "volume": 1600 }
+    ],
+    "contentPipeline": [
+      { "id": "seo-1", "title": "Best Organic Swaddles for Newborns (2026)", "status": "published", "targetKeyword": "organic baby swaddle", "traffic": 124 },
+      { "id": "seo-2", "title": "Bamboo vs Cotton: Which is Best for Baby?", "status": "draft", "targetKeyword": "bamboo sleep sack baby", "traffic": 0 },
+      { "id": "seo-3", "title": "Ultimate Guide to Eco-Friendly Baby Gifts", "status": "idea", "targetKeyword": "eco friendly baby gifts", "traffic": 0 }
+    ]
+  },
   "insightsData": {
+    "revenueByChannel": [
+      { "name": "Shopify", "value": 1247.30 },
+      { "name": "Klaviyo Email", "value": 119.85 },
+      { "name": "Facebook Ads", "value": 121.00 },
+      { "name": "Google Ads", "value": 0 }
+    ],
     "revenueByFlow": [
       { "name": "Welcome", "value": 61.20 },
       { "name": "Post-Purch", "value": 58.65 },
@@ -125,6 +189,13 @@
       { "name": "Winback", "value": 0 },
       { "name": "Cart", "value": 0 },
       { "name": "Sunset", "value": 0 }
+    ],
+    "trafficBySource": [
+      { "name": "Organic", "value": 482 },
+      { "name": "Direct", "value": 310 },
+      { "name": "Social", "value": 185 },
+      { "name": "Email", "value": 142 },
+      { "name": "Paid", "value": 38 }
     ],
     "engagementTrend": [
       { "week": "Feb 17", "openRate": 39.2, "clickRate": 7.1 },
@@ -139,6 +210,13 @@
       { "name": "Engaged Buyers", "value": 98 },
       { "name": "At Risk", "value": 85 },
       { "name": "Lapsed", "value": 63 }
+    ],
+    "weeklyRevenue": [
+      { "week": "Feb 17", "shopify": 280, "email": 22, "ads": 35 },
+      { "week": "Feb 24", "shopify": 310, "email": 28, "ads": 42 },
+      { "week": "Mar 3", "shopify": 295, "email": 25, "ads": 30 },
+      { "week": "Mar 10", "shopify": 340, "email": 32, "ads": 14 },
+      { "week": "Mar 17", "shopify": 322, "email": 38, "ads": 0 }
     ]
   },
   "pipeline": [

@@ -1,132 +1,148 @@
 // Hardcoded sample data (fallback when live data is unavailable)
-const sampleStats = [
-  { label: 'Active Subscribers', value: '2,847', change: '+12.3%', up: true },
-  { label: 'Open Rate (30d)', value: '42.6%', change: '+3.1%', up: true },
-  { label: 'Click Rate (30d)', value: '8.9%', change: '-0.4%', up: false },
-  { label: 'Revenue (30d)', value: '$119.85', change: '+18.7%', up: true },
-  { label: 'List Growth Rate', value: '5.2%', change: '+1.1%', up: true },
+
+const sampleChannelBanner = [
+  { channel: 'shopify', label: 'Shopify Revenue', value: '$1,247.30', change: '+18.7%', up: true, sparkline: [820, 910, 1050, 980, 1120, 1190, 1247] },
+  { channel: 'klaviyo', label: 'Klaviyo Email Revenue', value: '$119.85', change: '+12.3%', up: true, sparkline: [65, 78, 82, 95, 102, 110, 119] },
+  { channel: 'googleAds', label: 'Google Ads ROAS', value: '0.00x', change: 'Paused', up: false, sparkline: [2.1, 1.8, 2.3, 1.9, 0, 0, 0] },
+  { channel: 'facebookAds', label: 'Facebook Ads ROAS', value: '1.42x', change: '-8.2%', up: false, sparkline: [1.6, 1.5, 1.7, 1.4, 1.3, 1.5, 1.42] },
+  { channel: 'seo', label: 'SEO Organic Traffic', value: '482', change: '+6.1%', up: true, sparkline: [310, 340, 380, 405, 420, 455, 482] },
 ]
 
 const samplePriorities = [
   {
     id: 1,
-    title: 'Fix Welcome Series Drop-off',
-    description: 'Email 3 in the welcome series has a 68% drop-off rate. Subject line needs A/B testing.',
-    prompt: 'Draft 3 A/B test subject lines for a baby product welcome series email #3, focused on organic cotton benefits. Current subject: "Your Baby Deserves the Best"',
+    title: 'Reactivate Google Ads — All 5 Campaigns Paused',
+    description: 'All Google Ads campaigns are currently paused — zero paid traffic entering the funnel.',
+    prompt: 'Review Google Ads — all 5 campaigns are paused. Re-enable the most relevant ones and check for billing or policy issues.',
     done: false,
     urgency: 'high',
   },
   {
     id: 2,
-    title: 'Launch Spring Collection Campaign',
-    description: 'New muslin swaddle collection ready. Segment: engaged buyers in last 90 days.',
-    prompt: 'Write a warm, nurturing email announcing a new spring muslin swaddle collection for a baby brand called Cuddle Sprouts. Include 3 product highlights and a 15% early-access discount code SPRING15.',
-    done: true,
-    urgency: 'medium',
+    title: 'Send Easter Promo Email Campaign',
+    description: 'No campaigns sent in 30 days. Easter segment already built (366 eligible). Easter is April 5.',
+    prompt: 'Write an Easter promotional email for Cuddle Sprouts targeting engaged subscribers.',
+    done: false,
+    urgency: 'high',
   },
   {
     id: 3,
-    title: 'Win-Back Flow Optimization',
-    description: 'Current win-back flow has 2.1% conversion. Industry avg is 5.4%. Needs new incentive structure.',
-    prompt: 'Design a 4-email win-back flow for lapsed baby product customers (90+ days inactive). Include progressive discount strategy starting at free shipping, ending at 20% off.',
+    title: 'Fulfill Order #1455 ($42.54)',
+    description: 'Order #1455 came in today and is still unfulfilled.',
+    prompt: 'Go to Shopify admin, find order #1455 and fulfill it.',
     done: false,
     urgency: 'high',
   },
   {
     id: 4,
-    title: 'Segment VIP Customers',
-    description: 'Create a VIP segment for customers with 3+ orders and AOV > $45.',
-    prompt: 'Create a Klaviyo segment definition for VIP baby product customers: 3+ orders, AOV over $45, at least one order in last 60 days. Include recommended properties to track.',
+    title: 'Investigate $0-Revenue Flows',
+    description: 'Browse Abandonment, Winback, and Abandoned Cart all have $0 revenue.',
+    prompt: 'Audit three Klaviyo flows with zero revenue.',
     done: false,
     urgency: 'medium',
   },
   {
     id: 5,
-    title: 'Update Sunset Policy',
-    description: 'Remove unengaged subscribers (no opens in 180 days) to improve deliverability.',
-    prompt: 'Write a 2-email sunset series for a baby brand. Email 1: "We miss you" with emotional appeal. Email 2: "Last chance" with clear unsubscribe CTA. Keep brand voice warm and gentle.',
-    done: true,
-    urgency: 'low',
+    title: 'Publish Draft Flows (Back in Stock, Fulfilled Order)',
+    description: 'Two Klaviyo flows are still in draft status.',
+    prompt: 'Review the Back in Stock Alert and Fulfilled Order draft flows.',
+    done: false,
+    urgency: 'medium',
   },
 ]
 
-const sampleEmailFlows = [
-  {
-    id: 'welcome',
-    name: 'Welcome Series',
-    status: 'live',
-    emails: 5,
-    openRate: 58.2,
-    clickRate: 12.4,
-    revenue: 42.30,
-    lastUpdated: '2026-03-15',
-    diagnosis: 'Strong opener (72% open) but Email 3 drops to 31%. Subject line fatigue detected. Recommend: split test personalized vs. benefit-led subjects. Email 5 CTA button color may blend with template—test contrasting color.',
-  },
-  {
-    id: 'abandoned-cart',
-    name: 'Abandoned Cart',
-    status: 'live',
-    emails: 3,
-    openRate: 45.8,
-    clickRate: 9.7,
-    revenue: 38.90,
-    lastUpdated: '2026-03-12',
-    diagnosis: 'Performing above benchmark. Email 1 timing (1hr) is optimal. Email 2 could include social proof—add review snippet. Email 3 discount (10%) converts at 4.2%, test bumping to 15% for high-AOV carts only.',
-  },
-  {
-    id: 'post-purchase',
-    name: 'Post-Purchase',
-    status: 'live',
-    emails: 4,
-    openRate: 52.1,
-    clickRate: 7.3,
-    revenue: 18.65,
-    lastUpdated: '2026-03-10',
-    diagnosis: 'Good engagement but cross-sell email (Email 3) underperforms. Product recommendations not personalized—switch from static to dynamic product feed. Add age-appropriate filtering based on baby registry data.',
-  },
-  {
-    id: 'win-back',
-    name: 'Win-Back',
-    status: 'draft',
-    emails: 3,
-    openRate: 22.4,
-    clickRate: 3.1,
-    revenue: 8.40,
-    lastUpdated: '2026-03-08',
-    diagnosis: 'Below industry average (5.4% click). Trigger timing (90 days) may be too late—test 60-day trigger. Current incentive (free shipping) not compelling enough. Recommend progressive: free shipping → 10% off → 20% off with urgency.',
-  },
-  {
-    id: 'birthday',
-    name: 'Baby Birthday',
-    status: 'live',
-    emails: 2,
-    openRate: 61.5,
-    clickRate: 14.2,
-    revenue: 11.60,
-    lastUpdated: '2026-03-05',
-    diagnosis: 'Highest click rate across all flows. Strong emotional connection. Consider adding a 3rd email (milestone gift guide) 1 week after birthday. Current 20% discount converts well—maintain. Add SMS companion for higher reach.',
-  },
-  {
-    id: 'browse-abandon',
-    name: 'Browse Abandonment',
-    status: 'paused',
-    emails: 2,
-    openRate: 33.7,
-    clickRate: 5.8,
-    revenue: 0,
-    lastUpdated: '2026-02-28',
-    diagnosis: 'Paused due to low engagement. Content too generic—needs dynamic product insertion. Trigger fires too broadly (any page view). Narrow to: viewed product page 2+ times OR spent 30+ seconds. Re-test after fixes.',
-  },
-]
+const sampleShopify = {
+  revenue: { today: 42.54, week: 289.70, month: 1247.30 },
+  orders: { today: 1, week: 8, month: 34 },
+  aov: 36.69,
+  topProducts: [
+    { name: 'Organic Cotton Swaddle Set', revenue: 328.50, unitsSold: 15, image: '' },
+    { name: 'Bamboo Sleep Sack', revenue: 245.80, unitsSold: 11, image: '' },
+    { name: 'Muslin Burp Cloths (3-pack)', revenue: 189.60, unitsSold: 24, image: '' },
+    { name: 'Organic Onesie Bundle', revenue: 167.40, unitsSold: 9, image: '' },
+    { name: 'Newborn Gift Box', revenue: 142.00, unitsSold: 4, image: '' },
+  ],
+}
+
+const sampleKlaviyo = {
+  subscribers: 366,
+  listGrowthRate: 9.8,
+  flows: [
+    { id: 'welcome-flow', name: 'Welcome Flow', status: 'live', emails: 5, openRate: 58.2, clickRate: 12.4, revenue: 61.20, lastUpdated: '2026-03-19', diagnosis: 'Healthy flow generating $61.20 revenue.' },
+    { id: 'post-purchase', name: 'Post-Purchase Bounce Back', status: 'live', emails: 4, openRate: 52.1, clickRate: 7.3, revenue: 58.65, lastUpdated: '2026-03-19', diagnosis: 'Top revenue-per-recipient flow at $1.78.' },
+    { id: 'browse-abandonment', name: 'Browse Abandonment', status: 'live', emails: 2, openRate: 33.7, clickRate: 5.8, revenue: 0, lastUpdated: '2026-03-19', diagnosis: '30 deliveries but $0 revenue — needs attention.' },
+    { id: 'winback', name: 'Winback — High-Value 180 Days', status: 'live', emails: 3, openRate: 22.4, clickRate: 3.1, revenue: 0, lastUpdated: '2026-03-19', diagnosis: '22 deliveries but $0 revenue.' },
+    { id: 'abandoned-cart', name: 'Abandoned Cart Reminder', status: 'live', emails: 3, openRate: 45.8, clickRate: 9.7, revenue: 0, lastUpdated: '2026-03-19', diagnosis: '14 deliveries but $0 revenue.' },
+    { id: 'sunset', name: 'Sunset Unengaged Subscribers', status: 'live', emails: 2, openRate: 30.0, clickRate: 4.0, revenue: 0, lastUpdated: '2026-03-19', diagnosis: 'List hygiene flow working as expected.' },
+  ],
+  campaigns: [
+    { id: 'camp-1', name: "Valentine's Day Collection", sentDate: '2026-02-12', recipients: 310, openRate: 41.2, clickRate: 6.8, revenue: 89.40 },
+    { id: 'camp-2', name: 'New Arrivals — Spring', sentDate: '2026-02-20', recipients: 340, openRate: 38.5, clickRate: 5.2, revenue: 42.10 },
+  ],
+  emailRevenue: 119.85,
+}
+
+const sampleGoogleAds = {
+  spend: 0,
+  roas: 0,
+  conversions: 0,
+  costPerConversion: 0,
+  campaigns: [
+    { id: 'gad-1', name: 'Best Sellers — Shopping', status: 'paused', spend: 0, conversions: 0, roas: 0 },
+    { id: 'gad-2', name: 'Brand Search — Cuddle Sprouts', status: 'paused', spend: 0, conversions: 0, roas: 0 },
+    { id: 'gad-3', name: 'Baby Gifts — Search', status: 'paused', spend: 0, conversions: 0, roas: 0 },
+    { id: 'gad-4', name: 'Organic Baby — Display', status: 'paused', spend: 0, conversions: 0, roas: 0 },
+    { id: 'gad-5', name: 'Retargeting — Cart Abandoners', status: 'paused', spend: 0, conversions: 0, roas: 0 },
+  ],
+}
+
+const sampleFacebookAds = {
+  spend: 85.20,
+  roas: 1.42,
+  conversions: 3,
+  topAdSets: [
+    { id: 'fb-1', name: 'Lookalike — Past Purchasers', status: 'active', spend: 52.30, conversions: 2, roas: 1.65 },
+    { id: 'fb-2', name: 'Interest — New Parents', status: 'active', spend: 32.90, conversions: 1, roas: 1.08 },
+  ],
+}
+
+const sampleSeo = {
+  organicTraffic: 482,
+  keywordRankings: [
+    { keyword: 'organic baby swaddle', position: 12, change: 3, volume: 1200 },
+    { keyword: 'bamboo sleep sack baby', position: 18, change: -2, volume: 880 },
+    { keyword: 'cuddle sprouts', position: 1, change: 0, volume: 90 },
+    { keyword: 'organic cotton baby clothes', position: 34, change: 5, volume: 3400 },
+    { keyword: 'eco friendly baby gifts', position: 22, change: 1, volume: 1600 },
+  ],
+  contentPipeline: [
+    { id: 'seo-1', title: 'Best Organic Swaddles for Newborns (2026)', status: 'published', targetKeyword: 'organic baby swaddle', traffic: 124 },
+    { id: 'seo-2', title: 'Bamboo vs Cotton: Which is Best for Baby?', status: 'draft', targetKeyword: 'bamboo sleep sack baby', traffic: 0 },
+    { id: 'seo-3', title: 'Ultimate Guide to Eco-Friendly Baby Gifts', status: 'idea', targetKeyword: 'eco friendly baby gifts', traffic: 0 },
+  ],
+}
 
 const sampleInsightsData = {
+  revenueByChannel: [
+    { name: 'Shopify', value: 1247.30 },
+    { name: 'Klaviyo Email', value: 119.85 },
+    { name: 'Facebook Ads', value: 121.00 },
+    { name: 'Google Ads', value: 0 },
+  ],
   revenueByFlow: [
-    { name: 'Welcome', value: 42.30 },
-    { name: 'Cart', value: 38.90 },
-    { name: 'Post-Purch', value: 18.65 },
-    { name: 'Birthday', value: 11.60 },
-    { name: 'Win-Back', value: 8.40 },
+    { name: 'Welcome', value: 61.20 },
+    { name: 'Post-Purch', value: 58.65 },
     { name: 'Browse', value: 0 },
+    { name: 'Winback', value: 0 },
+    { name: 'Cart', value: 0 },
+    { name: 'Sunset', value: 0 },
+  ],
+  trafficBySource: [
+    { name: 'Organic', value: 482 },
+    { name: 'Direct', value: 310 },
+    { name: 'Social', value: 185 },
+    { name: 'Email', value: 142 },
+    { name: 'Paid', value: 38 },
   ],
   engagementTrend: [
     { week: 'W1', openRate: 39.2, clickRate: 7.1 },
@@ -137,44 +153,55 @@ const sampleInsightsData = {
     { week: 'W6', openRate: 44.0, clickRate: 9.5 },
   ],
   subscriberSegments: [
-    { name: 'Active Buyers', value: 892 },
-    { name: 'Engaged Non-Buyers', value: 634 },
-    { name: 'New Subscribers', value: 458 },
-    { name: 'At Risk', value: 312 },
-    { name: 'Lapsed', value: 551 },
+    { name: 'PROMO Eligible', value: 366 },
+    { name: 'New Subscribers', value: 120 },
+    { name: 'Engaged Buyers', value: 98 },
+    { name: 'At Risk', value: 85 },
+    { name: 'Lapsed', value: 63 },
+  ],
+  weeklyRevenue: [
+    { week: 'Feb 17', shopify: 280, email: 22, ads: 35 },
+    { week: 'Feb 24', shopify: 310, email: 28, ads: 42 },
+    { week: 'Mar 3', shopify: 295, email: 25, ads: 30 },
+    { week: 'Mar 10', shopify: 340, email: 32, ads: 14 },
+    { week: 'Mar 17', shopify: 322, email: 38, ads: 0 },
   ],
 }
 
 const samplePipeline = [
-  { id: 1, task: 'A/B Test: Welcome Email 3 Subject', status: 'in-progress', assignee: 'You', dueDate: 'Mar 20' },
-  { id: 2, task: 'Spring Swaddle Campaign Design', status: 'review', assignee: 'Designer', dueDate: 'Mar 19' },
-  { id: 3, task: 'Win-Back Flow Restructure', status: 'todo', assignee: 'You', dueDate: 'Mar 22' },
-  { id: 4, task: 'VIP Segment Setup in Klaviyo', status: 'todo', assignee: 'You', dueDate: 'Mar 21' },
-  { id: 5, task: 'Post-Purchase Dynamic Feed', status: 'in-progress', assignee: 'Dev', dueDate: 'Mar 23' },
-  { id: 6, task: 'SMS Birthday Flow Companion', status: 'backlog', assignee: 'You', dueDate: 'Mar 28' },
-  { id: 7, task: 'Browse Abandon Trigger Fix', status: 'blocked', assignee: 'Dev', dueDate: 'Mar 25' },
+  { id: 1, task: 'Easter Promo Email Campaign', status: 'todo', assignee: 'Together', dueDate: 'This week' },
+  { id: 2, task: 'Best Sellers Google Ads (Re-enable)', status: 'blocked', assignee: 'Yenny', dueDate: 'Apr 15' },
+  { id: 3, task: 'Back in Stock Alert Flow', status: 'review', assignee: 'You', dueDate: 'Mar 22' },
+  { id: 4, task: 'Fulfilled Order Flow', status: 'review', assignee: 'You', dueDate: 'Mar 22' },
+  { id: 5, task: 'Browse Abandonment Audit', status: 'todo', assignee: 'You', dueDate: 'This week' },
+  { id: 6, task: 'Abandoned Cart Revenue Fix', status: 'todo', assignee: 'You', dueDate: 'This week' },
+  { id: 7, task: 'Winback Trigger Optimization', status: 'backlog', assignee: 'You', dueDate: 'Mar 28' },
 ]
 
 const sampleSkipToday = [
-  { id: 1, task: 'Redesign footer template', reason: 'Waiting on brand guidelines v2' },
-  { id: 2, task: 'Migrate to new ESP', reason: 'Q2 initiative, not urgent' },
-  { id: 3, task: 'Annual subscriber survey', reason: 'Survey tool renewal pending' },
-  { id: 4, task: 'Holiday campaign planning', reason: 'Too early — revisit in September' },
+  { id: 1, task: 'Welcome Flow optimization', reason: 'Healthy — $61.20 revenue' },
+  { id: 2, task: 'Post-Purchase Flow optimization', reason: 'Healthy — $58.65 revenue' },
+  { id: 3, task: 'Facebook Ads review', reason: '1 campaign, low priority' },
+  { id: 4, task: 'Blog/SEO updates', reason: 'No urgent updates needed' },
+  { id: 5, task: 'Social Media content', reason: 'Not active yet' },
 ]
 
 const sampleComingUp = [
-  { id: 1, task: 'Mother\'s Day Campaign Kickoff', date: 'Mar 25', urgency: 'high' },
-  { id: 2, task: 'Quarterly Deliverability Audit', date: 'Mar 28', urgency: 'medium' },
-  { id: 3, task: 'New Product Launch: Bamboo Onesies', date: 'Apr 1', urgency: 'high' },
-  { id: 4, task: 'Subscriber Milestone Celebration (3K)', date: 'Apr 5', urgency: 'low' },
-  { id: 5, task: 'Summer Collection Teaser Planning', date: 'Apr 10', urgency: 'medium' },
-  { id: 6, task: 'Annual Retention Report', date: 'Apr 15', urgency: 'low' },
+  { id: 1, task: 'Easter — Send promo campaign', date: 'Apr 5', urgency: 'high' },
+  { id: 2, task: 'Best Sellers Google Ads relaunch', date: 'Apr 15', urgency: 'medium' },
+  { id: 3, task: 'Abandoned Cart & Browse Abandon audit', date: 'This week', urgency: 'high' },
+  { id: 4, task: 'Publish draft Klaviyo flows', date: 'Mar 22', urgency: 'medium' },
+  { id: 5, task: 'Winback trigger timing test', date: 'Mar 28', urgency: 'low' },
 ]
 
 const sampleData = {
-  stats: sampleStats,
+  channelBanner: sampleChannelBanner,
   priorities: samplePriorities,
-  emailFlows: sampleEmailFlows,
+  shopify: sampleShopify,
+  klaviyo: sampleKlaviyo,
+  googleAds: sampleGoogleAds,
+  facebookAds: sampleFacebookAds,
+  seo: sampleSeo,
   insightsData: sampleInsightsData,
   pipeline: samplePipeline,
   skipToday: sampleSkipToday,
@@ -193,12 +220,16 @@ function isDataFresh(lastUpdated) {
   }
 }
 
-function safeStat(stat, fallback) {
+// --- Defensive sanitizers ---
+
+function safeBannerItem(item, fallback) {
   return {
-    label: stat?.label ?? fallback?.label ?? 'N/A',
-    value: stat?.value ?? fallback?.value ?? '—',
-    change: stat?.change ?? fallback?.change ?? '—',
-    up: stat?.up ?? fallback?.up ?? true,
+    channel: item?.channel ?? fallback?.channel ?? 'unknown',
+    label: item?.label ?? fallback?.label ?? 'N/A',
+    value: item?.value ?? fallback?.value ?? '—',
+    change: item?.change ?? fallback?.change ?? '—',
+    up: item?.up ?? fallback?.up ?? true,
+    sparkline: Array.isArray(item?.sparkline) ? item.sparkline : (fallback?.sparkline ?? []),
   }
 }
 
@@ -224,6 +255,149 @@ function safeEmailFlow(f, fallback) {
     revenue: f?.revenue ?? fallback?.revenue ?? 0,
     lastUpdated: f?.lastUpdated ?? fallback?.lastUpdated ?? '',
     diagnosis: f?.diagnosis ?? fallback?.diagnosis ?? 'No diagnosis available.',
+  }
+}
+
+function safeCampaign(c, fallback) {
+  return {
+    id: c?.id ?? fallback?.id ?? 'unknown',
+    name: c?.name ?? fallback?.name ?? 'Unknown Campaign',
+    sentDate: c?.sentDate ?? fallback?.sentDate ?? '',
+    recipients: c?.recipients ?? fallback?.recipients ?? 0,
+    openRate: c?.openRate ?? fallback?.openRate ?? 0,
+    clickRate: c?.clickRate ?? fallback?.clickRate ?? 0,
+    revenue: c?.revenue ?? fallback?.revenue ?? 0,
+  }
+}
+
+function safeShopify(data) {
+  const fb = sampleShopify
+  if (!data || typeof data !== 'object') return fb
+  return {
+    revenue: {
+      today: data.revenue?.today ?? fb.revenue.today,
+      week: data.revenue?.week ?? fb.revenue.week,
+      month: data.revenue?.month ?? fb.revenue.month,
+    },
+    orders: {
+      today: data.orders?.today ?? fb.orders.today,
+      week: data.orders?.week ?? fb.orders.week,
+      month: data.orders?.month ?? fb.orders.month,
+    },
+    aov: data.aov ?? fb.aov,
+    topProducts: Array.isArray(data.topProducts) ? data.topProducts.map(p => ({
+      name: p?.name ?? 'Unknown Product',
+      revenue: p?.revenue ?? 0,
+      unitsSold: p?.unitsSold ?? 0,
+      image: p?.image ?? '',
+    })) : fb.topProducts,
+  }
+}
+
+function safeKlaviyo(data) {
+  const fb = sampleKlaviyo
+  if (!data || typeof data !== 'object') return fb
+  return {
+    subscribers: data.subscribers ?? fb.subscribers,
+    listGrowthRate: data.listGrowthRate ?? fb.listGrowthRate,
+    flows: Array.isArray(data.flows)
+      ? data.flows.map((f, i) => safeEmailFlow(f, fb.flows[i]))
+      : fb.flows,
+    campaigns: Array.isArray(data.campaigns)
+      ? data.campaigns.map((c, i) => safeCampaign(c, fb.campaigns[i]))
+      : fb.campaigns,
+    emailRevenue: data.emailRevenue ?? fb.emailRevenue,
+  }
+}
+
+function safeGoogleAds(data) {
+  const fb = sampleGoogleAds
+  if (!data || typeof data !== 'object') return fb
+  return {
+    spend: data.spend ?? fb.spend,
+    roas: data.roas ?? fb.roas,
+    conversions: data.conversions ?? fb.conversions,
+    costPerConversion: data.costPerConversion ?? fb.costPerConversion,
+    campaigns: Array.isArray(data.campaigns) ? data.campaigns.map(c => ({
+      id: c?.id ?? 'unknown',
+      name: c?.name ?? 'Unknown Campaign',
+      status: c?.status ?? 'paused',
+      spend: c?.spend ?? 0,
+      conversions: c?.conversions ?? 0,
+      roas: c?.roas ?? 0,
+    })) : fb.campaigns,
+  }
+}
+
+function safeFacebookAds(data) {
+  const fb = sampleFacebookAds
+  if (!data || typeof data !== 'object') return fb
+  return {
+    spend: data.spend ?? fb.spend,
+    roas: data.roas ?? fb.roas,
+    conversions: data.conversions ?? fb.conversions,
+    topAdSets: Array.isArray(data.topAdSets) ? data.topAdSets.map(a => ({
+      id: a?.id ?? 'unknown',
+      name: a?.name ?? 'Unknown Ad Set',
+      status: a?.status ?? 'paused',
+      spend: a?.spend ?? 0,
+      conversions: a?.conversions ?? 0,
+      roas: a?.roas ?? 0,
+    })) : fb.topAdSets,
+  }
+}
+
+function safeSeo(data) {
+  const fb = sampleSeo
+  if (!data || typeof data !== 'object') return fb
+  return {
+    organicTraffic: data.organicTraffic ?? fb.organicTraffic,
+    keywordRankings: Array.isArray(data.keywordRankings) ? data.keywordRankings.map(k => ({
+      keyword: k?.keyword ?? 'unknown',
+      position: k?.position ?? 0,
+      change: k?.change ?? 0,
+      volume: k?.volume ?? 0,
+    })) : fb.keywordRankings,
+    contentPipeline: Array.isArray(data.contentPipeline) ? data.contentPipeline.map(c => ({
+      id: c?.id ?? 'unknown',
+      title: c?.title ?? 'Untitled',
+      status: c?.status ?? 'idea',
+      targetKeyword: c?.targetKeyword ?? '',
+      traffic: c?.traffic ?? 0,
+    })) : fb.contentPipeline,
+  }
+}
+
+function safeInsightsData(data, fallback) {
+  const safeArray = (arr, fb) => (Array.isArray(arr) && arr.length > 0 ? arr : fb)
+  return {
+    revenueByChannel: safeArray(data?.revenueByChannel, fallback.revenueByChannel).map(d => ({
+      name: d?.name ?? 'Unknown',
+      value: d?.value ?? 0,
+    })),
+    revenueByFlow: safeArray(data?.revenueByFlow, fallback.revenueByFlow).map(d => ({
+      name: d?.name ?? 'Unknown',
+      value: d?.value ?? 0,
+    })),
+    trafficBySource: safeArray(data?.trafficBySource, fallback.trafficBySource).map(d => ({
+      name: d?.name ?? 'Unknown',
+      value: d?.value ?? 0,
+    })),
+    engagementTrend: safeArray(data?.engagementTrend, fallback.engagementTrend).map(d => ({
+      week: d?.week ?? '',
+      openRate: d?.openRate ?? 0,
+      clickRate: d?.clickRate ?? 0,
+    })),
+    subscriberSegments: safeArray(data?.subscriberSegments, fallback.subscriberSegments).map(d => ({
+      name: d?.name ?? 'Unknown',
+      value: d?.value ?? 0,
+    })),
+    weeklyRevenue: safeArray(data?.weeklyRevenue, fallback.weeklyRevenue).map(d => ({
+      week: d?.week ?? '',
+      shopify: d?.shopify ?? 0,
+      email: d?.email ?? 0,
+      ads: d?.ads ?? 0,
+    })),
   }
 }
 
@@ -254,35 +428,18 @@ function safeComingUpItem(c, fallback) {
   }
 }
 
-function safeInsightsData(data, fallback) {
-  const safeArray = (arr, fb) => (Array.isArray(arr) && arr.length > 0 ? arr : fb)
-  return {
-    revenueByFlow: safeArray(data?.revenueByFlow, fallback.revenueByFlow).map(d => ({
-      name: d?.name ?? 'Unknown',
-      value: d?.value ?? 0,
-    })),
-    engagementTrend: safeArray(data?.engagementTrend, fallback.engagementTrend).map(d => ({
-      week: d?.week ?? '',
-      openRate: d?.openRate ?? 0,
-      clickRate: d?.clickRate ?? 0,
-    })),
-    subscriberSegments: safeArray(data?.subscriberSegments, fallback.subscriberSegments).map(d => ({
-      name: d?.name ?? 'Unknown',
-      value: d?.value ?? 0,
-    })),
-  }
-}
-
 function sanitizeLiveData(liveData) {
-  const stats = Array.isArray(liveData.stats)
-    ? liveData.stats.map((s, i) => safeStat(s, sampleStats[i]))
-    : sampleStats
+  const channelBanner = Array.isArray(liveData.channelBanner)
+    ? liveData.channelBanner.map((b, i) => safeBannerItem(b, sampleChannelBanner[i]))
+    : sampleChannelBanner
   const priorities = Array.isArray(liveData.priorities)
     ? liveData.priorities.map((p, i) => safePriority(p, samplePriorities[i]))
     : samplePriorities
-  const emailFlows = Array.isArray(liveData.emailFlows)
-    ? liveData.emailFlows.map((f, i) => safeEmailFlow(f, sampleEmailFlows[i]))
-    : sampleEmailFlows
+  const shopify = safeShopify(liveData.shopify)
+  const klaviyo = safeKlaviyo(liveData.klaviyo)
+  const googleAds = safeGoogleAds(liveData.googleAds)
+  const facebookAds = safeFacebookAds(liveData.facebookAds)
+  const seo = safeSeo(liveData.seo)
   const insData = liveData.insightsData && typeof liveData.insightsData === 'object'
     ? safeInsightsData(liveData.insightsData, sampleInsightsData)
     : sampleInsightsData
@@ -297,9 +454,13 @@ function sanitizeLiveData(liveData) {
     : sampleComingUp
 
   return {
-    stats,
+    channelBanner,
     priorities,
-    emailFlows,
+    shopify,
+    klaviyo,
+    googleAds,
+    facebookAds,
+    seo,
     insightsData: insData,
     pipeline: pipelineData,
     skipToday: skipData,
@@ -342,12 +503,3 @@ export async function fetchDashboardData() {
     }
   }
 }
-
-// Re-export sample data for backward compatibility
-export const stats = sampleStats
-export const priorities = samplePriorities
-export const emailFlows = sampleEmailFlows
-export const insightsData = sampleInsightsData
-export const pipeline = samplePipeline
-export const skipToday = sampleSkipToday
-export const comingUp = sampleComingUp
