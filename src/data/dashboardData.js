@@ -193,9 +193,124 @@ function isDataFresh(lastUpdated) {
   }
 }
 
+function safeStat(stat, fallback) {
+  return {
+    label: stat?.label ?? fallback?.label ?? 'N/A',
+    value: stat?.value ?? fallback?.value ?? '—',
+    change: stat?.change ?? fallback?.change ?? '—',
+    up: stat?.up ?? fallback?.up ?? true,
+  }
+}
+
+function safePriority(p, fallback) {
+  return {
+    id: p?.id ?? fallback?.id ?? 0,
+    title: p?.title ?? fallback?.title ?? 'Untitled',
+    description: p?.description ?? fallback?.description ?? '',
+    prompt: p?.prompt ?? fallback?.prompt ?? '',
+    done: p?.done ?? fallback?.done ?? false,
+    urgency: p?.urgency ?? fallback?.urgency ?? 'medium',
+  }
+}
+
+function safeEmailFlow(f, fallback) {
+  return {
+    id: f?.id ?? fallback?.id ?? 'unknown',
+    name: f?.name ?? fallback?.name ?? 'Unknown Flow',
+    status: f?.status ?? fallback?.status ?? 'draft',
+    emails: f?.emails ?? fallback?.emails ?? 0,
+    openRate: f?.openRate ?? fallback?.openRate ?? 0,
+    clickRate: f?.clickRate ?? fallback?.clickRate ?? 0,
+    revenue: f?.revenue ?? fallback?.revenue ?? 0,
+    lastUpdated: f?.lastUpdated ?? fallback?.lastUpdated ?? '',
+    diagnosis: f?.diagnosis ?? fallback?.diagnosis ?? 'No diagnosis available.',
+  }
+}
+
+function safePipelineItem(p, fallback) {
+  return {
+    id: p?.id ?? fallback?.id ?? 0,
+    task: p?.task ?? fallback?.task ?? 'Untitled',
+    status: p?.status ?? fallback?.status ?? 'todo',
+    assignee: p?.assignee ?? fallback?.assignee ?? 'Unassigned',
+    dueDate: p?.dueDate ?? fallback?.dueDate ?? '',
+  }
+}
+
+function safeSkipItem(s, fallback) {
+  return {
+    id: s?.id ?? fallback?.id ?? 0,
+    task: s?.task ?? fallback?.task ?? 'Untitled',
+    reason: s?.reason ?? fallback?.reason ?? '',
+  }
+}
+
+function safeComingUpItem(c, fallback) {
+  return {
+    id: c?.id ?? fallback?.id ?? 0,
+    task: c?.task ?? fallback?.task ?? 'Untitled',
+    date: c?.date ?? fallback?.date ?? '',
+    urgency: c?.urgency ?? fallback?.urgency ?? 'medium',
+  }
+}
+
+function safeInsightsData(data, fallback) {
+  const safeArray = (arr, fb) => (Array.isArray(arr) && arr.length > 0 ? arr : fb)
+  return {
+    revenueByFlow: safeArray(data?.revenueByFlow, fallback.revenueByFlow).map(d => ({
+      name: d?.name ?? 'Unknown',
+      value: d?.value ?? 0,
+    })),
+    engagementTrend: safeArray(data?.engagementTrend, fallback.engagementTrend).map(d => ({
+      week: d?.week ?? '',
+      openRate: d?.openRate ?? 0,
+      clickRate: d?.clickRate ?? 0,
+    })),
+    subscriberSegments: safeArray(data?.subscriberSegments, fallback.subscriberSegments).map(d => ({
+      name: d?.name ?? 'Unknown',
+      value: d?.value ?? 0,
+    })),
+  }
+}
+
+function sanitizeLiveData(liveData) {
+  const stats = Array.isArray(liveData.stats)
+    ? liveData.stats.map((s, i) => safeStat(s, sampleStats[i]))
+    : sampleStats
+  const priorities = Array.isArray(liveData.priorities)
+    ? liveData.priorities.map((p, i) => safePriority(p, samplePriorities[i]))
+    : samplePriorities
+  const emailFlows = Array.isArray(liveData.emailFlows)
+    ? liveData.emailFlows.map((f, i) => safeEmailFlow(f, sampleEmailFlows[i]))
+    : sampleEmailFlows
+  const insData = liveData.insightsData && typeof liveData.insightsData === 'object'
+    ? safeInsightsData(liveData.insightsData, sampleInsightsData)
+    : sampleInsightsData
+  const pipelineData = Array.isArray(liveData.pipeline)
+    ? liveData.pipeline.map((p, i) => safePipelineItem(p, samplePipeline[i]))
+    : samplePipeline
+  const skipData = Array.isArray(liveData.skipToday)
+    ? liveData.skipToday.map((s, i) => safeSkipItem(s, sampleSkipToday[i]))
+    : sampleSkipToday
+  const comingUpData = Array.isArray(liveData.comingUp)
+    ? liveData.comingUp.map((c, i) => safeComingUpItem(c, sampleComingUp[i]))
+    : sampleComingUp
+
+  return {
+    stats,
+    priorities,
+    emailFlows,
+    insightsData: insData,
+    pipeline: pipelineData,
+    skipToday: skipData,
+    comingUp: comingUpData,
+  }
+}
+
 /**
  * Fetches live dashboard data from /data/dashboard-data.json.
  * Falls back to hardcoded sample data if fetch fails or data is stale.
+ * Applies defensive defaults to all fields to prevent crashes on malformed data.
  *
  * Returns: { data, isLive, lastUpdated }
  */
@@ -215,15 +330,7 @@ export async function fetchDashboardData() {
     }
 
     return {
-      data: {
-        stats: liveData.stats,
-        priorities: liveData.priorities,
-        emailFlows: liveData.emailFlows,
-        insightsData: liveData.insightsData,
-        pipeline: liveData.pipeline,
-        skipToday: liveData.skipToday,
-        comingUp: liveData.comingUp,
-      },
+      data: sanitizeLiveData(liveData),
       isLive: true,
       lastUpdated: liveData.lastUpdated,
     }
